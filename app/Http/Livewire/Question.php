@@ -4,22 +4,26 @@ declare(strict_types=1);
 
 namespace App\Http\Livewire;
 
-use App\Contracts\Repositories\QuestionRepositoryContract;
-use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
+use App\Contracts\Repositories\OptionRepositoryContract;
 use Livewire\Component;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
+use Barryvdh\Debugbar\Facades\Debugbar;
+use App\Contracts\Repositories\QuestionRepositoryContract;
 
 class Question extends Component
 {
-    public string $questions;
+    public string $question;
     public Collection $options;
     public $answer;
 
-    public function mount(QuestionRepositoryContract $questionRepository): void
+    public function mount(QuestionRepositoryContract $questionRepository, OptionRepositoryContract $optionRepository): void
     {
         $questions = $questionRepository->all();
-        $this->question = $questions->first();
-        $this->options = $questions->first()->options;
+        $question = $questions->first();
+
+        $this->question = $question->name;
+        $this->options = $question->options;
     }
 
     public function render(): View

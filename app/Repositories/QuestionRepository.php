@@ -12,7 +12,7 @@ class QuestionRepository implements QuestionRepositoryContract
 {
     public function all(): Collection
     {
-        return Question::latest()->get();
+        return collect(Question::latest()->get());
     }
 
     public function create(Collection $question): Collection
