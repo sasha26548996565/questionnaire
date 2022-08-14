@@ -14,16 +14,57 @@ use App\Contracts\Repositories\QuestionRepositoryContract;
 class Question extends Component
 {
     public string $question;
-    public Collection $options;
+    public array $options = [];
     public $answer;
+    public $keyCurrentQuestion;
+    public array $questions;
+    public $result;
+    public $currentResult;
 
-    public function mount(QuestionRepositoryContract $questionRepository, OptionRepositoryContract $optionRepository): void
+    public function mount(QuestionRepositoryContract $questionsRepository)
     {
-        $questions = $questionRepository->all();
-        $question = $questions->first();
+        $this->questions = $questionsRepository->all();
+        $this->toggleQuestion();
+    }
 
-        $this->question = $question->name;
-        $this->options = $question->options;
+    public function toggleQuestion()
+    {
+        $currentQuestion = null;
+        foreach ($this->questions as $key => $question)
+        {
+            if (!array_key_exists('passed', $question))
+            {
+                $currentQuestion = $question;
+                $this->keyCurrentQuestion = $key;
+                $this->question = $currentQuestion['name'];
+                $this->options = $currentQuestion['options'];
+                break;
+            }
+        }
+        if (is_null($currentQuestion))
+        {
+            $this->result = $this->calculateRightAnswers($this->questions);
+        }
+    }
+
+    public function calculateRightAnswers(array $questions)
+    {
+        return array_reduce($questions, function ($carry, $question) {
+            if ($question['answer_got'] == $question['right_answer'])
+            {
+                $carry = $carry + 1;
+            }
+            return $carry;
+        }, 0);
+    }
+
+    public function next()
+    {
+        $this->questions[$this->keyCurrentQuestion] = array_merge($this->questions[$this->keyCurrentQuestion], [
+           'passed' => true, 'answer_got' => $this->answer
+        ]);
+        $this->toggleQuestion();
+        $this->reset('answer');
     }
 
     public function render(): View

@@ -10,15 +10,15 @@ use App\Contracts\Repositories\QuestionRepositoryContract;
 
 class QuestionRepository implements QuestionRepositoryContract
 {
-    public function all(): Collection
+    public function all(): array
     {
-        return collect(Question::latest()->get());
+        return Question::with('options')->latest()->get()->toArray();
     }
 
-    public function create(Collection $question): Collection
+    public function create(array $question): array
     {
-        $question = Question::create($question->toArray());
+        $question = Question::create($question);
 
-        return collect($question);
+        return $question;
     }
 }

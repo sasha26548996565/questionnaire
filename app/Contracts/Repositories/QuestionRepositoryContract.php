@@ -8,6 +8,6 @@ use Illuminate\Support\Collection;
 
 interface QuestionRepositoryContract
 {
-    public function all(): Collection;
-    public function create(Collection $collection): Collection;
+    public function all(): array;
+    public function create(array $collection): array;
 }
