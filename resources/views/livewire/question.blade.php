@@ -5,14 +5,14 @@
                 <div class="py-2 h5"><b>{{ $question }}</b></div>
                 @foreach ($options as $key => $option)
                     <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
-                        <label class="options">{{ $option['name'] }}
+                        <label class="options">{{ $option }}
                             <input type="radio" name="answer" wire:model='answer' value="{{ $key }}"><span class="checkmark"></span>
                         </label>
                     </div>
                 @endforeach
 
                 @if (is_null($answer) == false)
-                    <p>Ваш ответ: {{ $options[$answer]['name'] }}</p>
+                    <p>Ваш ответ: {{ $options[$answer] }}</p>
                 @endif
 
                 <div class="d-flex align-items-center pt-3 justify-content-center">

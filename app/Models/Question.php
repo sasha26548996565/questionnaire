@@ -12,8 +12,6 @@ class Question extends Model
 {
     use HasFactory;
 
-    public function options(): Relation
-    {
-        return $this->hasMany(Option::class, 'question_id', 'id');
-    }
+    protected $guarded = [];
+    protected $casts = ['options' => 'array'];
 }

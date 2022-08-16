@@ -12,7 +12,9 @@ class QuestionFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word,
+            'question' => $this->faker->word,
+            'right_answer' => 1,
+            'options' => json_encode(['item1', 'var1'])
         ];
     }
 }

@@ -36,7 +36,7 @@ class Question extends Component
             {
                 $currentQuestion = $question;
                 $this->keyCurrentQuestion = $key;
-                $this->question = $currentQuestion['name'];
+                $this->question = $currentQuestion['question'];
                 $this->options = $currentQuestion['options'];
                 break;
             }
