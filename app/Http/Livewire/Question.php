@@ -62,6 +62,7 @@ class Question extends Component
         if (is_null($currentQuestion))
         {
             $this->result = $this->calculateRightAnswers($this->questions);
+            $this->emit('quizPassed');
         }
     }
 

@@ -43,5 +43,7 @@
                 <div class="m-3">{{ $currentResult }}</div>
             @endif
         </div>
+
+        <livewire:toast :title="'test passed'" :message="'you complete the test'">
     </div>
 </div>
