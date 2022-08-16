@@ -25,12 +25,12 @@ class Question extends Component
     public function mount(QuestionRepositoryContract $questionsRepository)
     {
         $this->questions = $questionsRepository->all();
-        $this->countQuestions = $questionsRepository->count();
+        $this->countQuestions = count($this->questions);
     }
 
     public function getQuestionsCount(QuestionRepositoryContract $questionsRepository): void
     {
-        $this->countQuestions = $questionsRepository->count();
+        $this->countQuestions = count($this->questions);
     }
 
     public function getCurrentResult(): void

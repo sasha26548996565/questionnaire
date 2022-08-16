@@ -20,9 +20,4 @@ class QuestionRepository implements QuestionRepositoryContract
     {
         Question::create($question->toArray());
     }
-
-    public function count(): int
-    {
-        return Question::count();
-    }
 }
