@@ -10,5 +10,6 @@ use Illuminate\Support\Collection;
 interface QuestionRepositoryContract
 {
     public function all(): array;
+    public function count(): int;
     public function create(QuestionDTO $collection);
 }

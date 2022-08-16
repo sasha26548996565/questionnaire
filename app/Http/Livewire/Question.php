@@ -14,6 +14,7 @@ use App\Contracts\Repositories\QuestionRepositoryContract;
 class Question extends Component
 {
     public string $question;
+    public int $countQuestions;
     public array $options = [];
     public $answer;
     public $keyCurrentQuestion;
@@ -24,12 +25,28 @@ class Question extends Component
     public function mount(QuestionRepositoryContract $questionsRepository)
     {
         $this->questions = $questionsRepository->all();
+        $this->countQuestions = $questionsRepository->count();
+    }
+
+    public function getQuestionsCount(QuestionRepositoryContract $questionsRepository): void
+    {
+        $this->countQuestions = $questionsRepository->count();
+    }
+
+    public function getCurrentResult(): void
+    {
+        $this->currentResult = $this->keyCurrentQuestion . '/' . count($this->questions);
+    }
+
+    public function loadQuestions(): void
+    {
         $this->toggleQuestion();
     }
 
-    public function toggleQuestion()
+    public function toggleQuestion(): void
     {
         $currentQuestion = null;
+
         foreach ($this->questions as $key => $question)
         {
             if (!array_key_exists('passed', $question))
@@ -41,6 +58,7 @@ class Question extends Component
                 break;
             }
         }
+
         if (is_null($currentQuestion))
         {
             $this->result = $this->calculateRightAnswers($this->questions);
@@ -54,6 +72,7 @@ class Question extends Component
             {
                 $carry = $carry + 1;
             }
+
             return $carry;
         }, 0);
     }

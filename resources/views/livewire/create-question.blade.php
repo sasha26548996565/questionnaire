@@ -1,7 +1,7 @@
 <div class="container">
     <form wire:submit.prevent='store'>
         <h1>Добавить вопрос</h1>
-        <input type="text" name="question" class="form-control" wire:model='question'><br>
+        <input type="text" name="question" class="form-control" wire:dirty.class='border border-info' wire:model.lazy='question'><br>
 
         @error('question')
             {{ $message }}
